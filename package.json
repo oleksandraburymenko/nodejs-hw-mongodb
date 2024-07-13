@@ -25,5 +25,8 @@
     "express": "^4.19.2",
     "mongoose": "^8.5.1",
     "pino-http": "^10.2.0"
+  },
+  "env": {
+    "node": true
   }
 }
