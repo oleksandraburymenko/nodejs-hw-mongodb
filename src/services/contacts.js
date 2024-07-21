@@ -36,7 +36,7 @@ export const getAllContacts = async ({filter, page, perPage, sortBy = fieldList[
        
 };
 
-export const getContactById = (contactId) => contactsCollection.findById(contactId);
+export const getContactById = (contactId) => contactsCollection.findOne(contactId);
 
 export const createContact = data => contactsCollection.create(data);
 
