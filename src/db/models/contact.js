@@ -26,6 +26,9 @@ const contactShema = new Schema(
             required: true,
             ref: "user",
         },
+        photo: {
+            type: String
+        },
         contactType: {
             type: String,
             required: false,
