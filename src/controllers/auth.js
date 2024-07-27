@@ -3,8 +3,8 @@ import { registerUser, findUser } from "../services/auth.js";
 import { compareHash } from "../utils/hash.js";
 import { createSession, findSession, deleteSession } from "../services/session.js";
 import { requestResetToken, resetPassword } from "../services/auth.js";
-import { generateAuthUrl } from "../utils/googleOAuth2.js";
-
+import { generateAuthUrl, validateGoogleOAuthCode, getGoogleOAuthName } from "../utils/googleOauth2.js";
+import {randomBytes} from "node:crypto";
 
 const setupResponseSession = (res, { refreshToken, refreshTokenValidUntil, _id }) => {
     res.cookie("refreshToken", refreshToken, {
@@ -135,4 +135,35 @@ export const getGoogleOAuthUrlController = async(req, res)=> {
             url,
         }
     })
+}
+
+export const authGoogleController = async(req, res)=> {
+    const {code} = req.body;
+    const ticket = await validateGoogleOAuthCode(code);
+    const userPayload = ticket.getPayload();
+    if(!userPayload) {
+        throw createHttpError(401);
+    }
+
+    let user = await findUser({email: userPayload.email});
+    if(!user) {
+        const registerUserData = {
+            email: userPayload.email,
+            password: randomBytes(10),
+            name: getGoogleOAuthName(userPayload),
+        }
+        user = await registerUser(registerUserData);
+    }
+
+    const session  = await createSession(user._id);
+    setupResponseSession(res, session);
+    
+    res.json({
+        status: 200,
+        message: "Successfully logged in an user!",
+        data: {
+            accessToken: session.accessToken,
+        }
+        
+    });
 }
