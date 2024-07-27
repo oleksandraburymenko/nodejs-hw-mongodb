@@ -18,7 +18,7 @@ const googleOAuthClient = new OAuth2Client({
 
 
 export const generateAuthUrl = ()=> {
-    googleOAuthClient.generateAuthUrl({
+    return googleOAuthClient.generateAuthUrl({
         scope: [
             "https://www.googleapis.com/auth/userinfo.email",
             "https://www.googleapis.com/auth/userinfo.profile",
