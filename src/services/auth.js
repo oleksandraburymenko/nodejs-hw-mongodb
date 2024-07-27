@@ -7,7 +7,7 @@ import bcrypt from "bcrypt";
 import { userCollection } from "../db/models/user.js";
 import { SMTP } from "../constants/index.js";
 import { env } from "../utils/env.js";
-import { sendMail } from "../utils/sendMail.js";
+import { sendEmail } from "../utils/sendMail.js";
 import { TEMPLATES_DIR } from "../constants/index.js";
 
 
@@ -47,7 +47,7 @@ export const requestResetToken = async (email) => {
         });
     
     
-        await sendMail({
+        await sendEmail({
             from: env(SMTP.SMTP_FROM),
             to: email,
             subject: 'Reset your password',
