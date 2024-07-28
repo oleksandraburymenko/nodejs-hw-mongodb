@@ -3,7 +3,7 @@ import { registerUser, findUser } from "../services/auth.js";
 import { compareHash } from "../utils/hash.js";
 import { createSession, findSession, deleteSession } from "../services/session.js";
 import { requestResetToken, resetPassword } from "../services/auth.js";
-import { generateAuthUrl, validateGoogleOAuthCode, getGoogleOAuthName } from "../utils/googleOauth2.js";
+import { generateAuthUrl, validateGoogleOAuthCode, getGoogleOAuthName } from "../utils/googleOAuth2.js";
 import {randomBytes} from "node:crypto";
 
 const setupResponseSession = (res, { refreshToken, refreshTokenValidUntil, _id }) => {
