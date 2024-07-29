@@ -5,6 +5,39 @@ operationId: upsertContact
 description: 'upsert contact by id'
 security:
   - bearerAuth: []
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        required:
+          - name
+          - phoneNumber
+        properties:
+          name:
+            description: "Contact's name"
+            type: string
+            example: 'John Doe'
+          phoneNumber:
+            description: "Contact's phone number"
+            type: number
+            example: 0961212345
+          email:
+            description: "Contact's email"
+            type: string
+            example: example@mail.com
+          isFavourite:
+            description: "Contact's isFavourite boolean"
+            type: boolean
+            example: false
+          contactType:
+            type: string
+            example: 'work'
+            enum: ['work', 'home', 'personal']
+          photo:
+            description: "Link to contact's photo"
+            type: string
+            format: binary
 parameters:
   - in: path
     name: id
